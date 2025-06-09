@@ -76,18 +76,11 @@ https://github.com/GS1-2025/backend-java.git
 
 ```json
 {
-<<<<<<< HEAD
-  "nome": "Sensor de Temperatura",
-  "descricao": "Sensor de alta precisão para temperatura ambiente",
-  "precoUnitario": 99.90
-}
-=======
   "nome": "Sensor Temperatura",
   "descricao": "Sensor para temperatura ambiente",
   "precoUnitario": 69.90
 }
 
->>>>>>> d9b90e6 (validacoes)
 ```
 
 ---
@@ -111,11 +104,8 @@ https://github.com/GS1-2025/backend-java.git
 
 ```json
 {
-<<<<<<< HEAD
-  "dataPedido": "2025-06-09T14:30:00",
-=======
+
   "dataPedido": "2025-06-09T11:30:00",
->>>>>>> d9b90e6 (validacoes)
   "itens": {
     "pedidoId": 0,
     "usuarioId": 1,
@@ -133,12 +123,10 @@ https://github.com/GS1-2025/backend-java.git
 {
   "tipo": "Temperatura",
   "modelo": "TMP-1000",
-<<<<<<< HEAD
-  "descricao": "Sensor digital de temperatura com alta precisão"
-=======
+
   "descricao": "Sensor de temperatura com alta precisão",
   "produtoId": 1
->>>>>>> d9b90e6 (validacoes)
+
 }
 ```
 
