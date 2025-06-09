@@ -12,8 +12,8 @@ using gs_sensolux.Infrastructure.Context;
 namespace gs_sensolux.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250609022934_NovaMigrate")]
-    partial class NovaMigrate
+    [Migration("20250609161853_NewMigrate")]
+    partial class NewMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,7 +216,7 @@ namespace gs_sensolux.Migrations
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("SSX_USUARIOS_ID_USUARIO");
+                        .HasColumnName("SSX_PRODUTOS_ID_PRODUTO");
 
                     b.Property<string>("Status")
                         .IsRequired()

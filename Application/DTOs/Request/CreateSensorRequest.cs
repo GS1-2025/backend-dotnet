@@ -6,5 +6,7 @@
         public string? Modelo { get; set; }            
         public string? Descricao { get; set; }         
         public string? Status { get; set; }
+        public int ProdutoId { get; set; }
+
     }
 }

@@ -18,6 +18,22 @@ namespace gs_sensolux.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            // Conversão automática de bool -> int (0 ou 1), para Oracle
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var boolProps = entityType.ClrType
+                    .GetProperties()
+                    .Where(p => p.PropertyType == typeof(bool) || p.PropertyType == typeof(bool?));
+
+                foreach (var prop in boolProps)
+                {
+                    modelBuilder.Entity(entityType.ClrType)
+                        .Property(prop.Name)
+                        .HasConversion<int>();
+                }
+            }
             modelBuilder.ApplyConfiguration(new UsuarioMap()); // <- ISSO É ESSENCIAL
 
             modelBuilder.Entity<Usuario>()

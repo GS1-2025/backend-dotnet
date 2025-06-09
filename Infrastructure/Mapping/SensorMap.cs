@@ -16,7 +16,7 @@ namespace gs_sensolux.Infrastructure.Mapping
 
 
             builder.Property(s => s.ProdutoId)
-                   .HasColumnName("SSX_USUARIOS_ID_USUARIO");
+                   .HasColumnName("SSX_PRODUTOS_ID_PRODUTO");
 
             builder.Property(s => s.Tipo)
                    .HasColumnName("TIPO")
@@ -31,9 +31,10 @@ namespace gs_sensolux.Infrastructure.Mapping
                    .HasColumnName("MODELO")
                    .HasMaxLength(35);
 
-            builder.Property(s => s.Status)
-                   .HasColumnName("STATUS")
-                   .HasMaxLength(15);
+            builder.Property(p => p.Status)
+              .HasColumnName("STATUS")
+              .HasMaxLength(15)
+              .IsRequired();
         }
     }
 }

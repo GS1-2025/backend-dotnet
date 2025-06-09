@@ -14,13 +14,14 @@
 
         protected Endereco() { }
 
-        public Endereco(string cep, string estado, string cidade, string bairro, string rua)
+        public Endereco(string cep, string estado, string cidade, string bairro, string rua, int UsuarioId)
         {
             SetCep(cep);
             SetEstado(estado);
             SetCidade(cidade);
             SetBairro(bairro);
             SetRua(rua);
+            SetUsuarioId(UsuarioId);
         }
 
         public void SetCep(string cep)
@@ -49,6 +50,14 @@
         {
             Rua = rua ?? "N/A";
         }
+        public void SetUsuarioId(int usuarioId)
+        {
+            if (usuarioId <= 0)
+                throw new ArgumentException("Usuário inválido.");
+            UsuarioId = usuarioId;
+        }
+
     }
+
 
 }

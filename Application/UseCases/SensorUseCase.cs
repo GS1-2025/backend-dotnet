@@ -21,24 +21,36 @@ public class SensorUseCase
 
     public async Task<SensorResponse> CriarSensorAsync(CreateSensorRequest request)
     {
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+
         var validationResult = await _validator.ValidateAsync(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var sensor = new Sensor(request.Tipo, request.Modelo, request.Descricao);
+        var produtoExiste = await _context.Produtos
+         .Where(p => p.Id == request.ProdutoId)
+         .Select(p => 1)
+         .FirstOrDefaultAsync() == 1;
 
-        // Define status conforme o que vier na requisição (padrão: Ativo)
-        if (!string.IsNullOrEmpty(request.Status))
+        if (!produtoExiste)
+            throw new KeyNotFoundException($"Produto com ID {request.ProdutoId} não encontrado.");
+
+        var sensor = new Sensor(request.Tipo, request.Modelo, request.Descricao);
+        SetProdutoId(sensor, request.ProdutoId);
+
+        switch (request.Status?.ToLowerInvariant())
         {
-            var statusLower = request.Status.ToLowerInvariant();
-            if (statusLower == "inativo")
+            case "inativo":
                 sensor.Desativar();
-            else
+                break;
+            case "ativo":
+            case null:
+            case "":
                 sensor.Ativar();
-        }
-        else
-        {
-            sensor.Ativar(); // status padrão
+                break;
+            default:
+                throw new ArgumentException($"Status '{request.Status}' inválido. Use 'ativo' ou 'inativo'.");
         }
 
         _context.Sensores.Add(sensor);
@@ -46,6 +58,7 @@ public class SensorUseCase
 
         return MapToResponse(sensor);
     }
+
 
     public async Task<List<SensorResponse>> ListarSensoresAsync()
     {
@@ -69,9 +82,21 @@ public class SensorUseCase
         var sensor = await _context.Sensores.FindAsync(id);
         if (sensor == null) throw new KeyNotFoundException("Sensor não encontrado");
 
+        // Validar se Produto existe
+        var produtoExiste = await _context.Produtos
+         .Where(p => p.Id == request.ProdutoId)
+         .Select(p => 1)
+         .FirstOrDefaultAsync() == 1;
+
+        if (!produtoExiste)
+            throw new KeyNotFoundException($"Produto com ID {request.ProdutoId} não encontrado.");
+
         sensor.SetTipo(request.Tipo);
         sensor.SetModelo(request.Modelo);
         sensor.SetDescricao(request.Descricao);
+
+        // Atualizar ProdutoId
+        SetProdutoId(sensor, request.ProdutoId);
 
         if (!string.IsNullOrEmpty(request.Status))
         {
@@ -106,5 +131,18 @@ public class SensorUseCase
             Descricao = sensor.Descricao,
             Status = sensor.Status
         };
+    }
+
+    private void SetProdutoId(Sensor sensor, int produtoId)
+    {
+        var prop = typeof(Sensor).GetProperty("ProdutoId", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+        if (prop != null && prop.CanWrite)
+        {
+            prop.SetValue(sensor, produtoId);
+        }
+        else
+        {
+            throw new System.Exception("Não foi possível setar ProdutoId no Sensor.");
+        }
     }
 }

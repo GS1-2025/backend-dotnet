@@ -28,7 +28,8 @@ public class EnderecoUseCase
             request.Estado,
             request.Cidade,
             request.Bairro,
-            request.Rua
+            request.Rua,
+            request.UsuarioId
         );
 
         _context.Enderecos.Add(endereco);
@@ -87,7 +88,8 @@ public class EnderecoUseCase
             Estado = endereco.Estado,
             Cidade = endereco.Cidade,
             Bairro = endereco.Bairro,
-            Rua = endereco.Rua
+            Rua = endereco.Rua,
+            UsuarioId = endereco.UsuarioId
         };
     }
 }

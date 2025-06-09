@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using FluentValidation;
+using System.Linq;
+using gs_sensolux.Application.DTOs.Response;
 
 namespace gs_sensolux.API.Controllers
 {
@@ -25,10 +27,8 @@ namespace gs_sensolux.API.Controllers
         /// <summary>
         /// Lista todos os pedidos.
         /// </summary>
-        /// <returns>Lista de pedidos</returns>
-        /// <response code="200">Lista retornada com sucesso</response>
         [HttpGet]
-        public async Task<IActionResult> ListarTodosAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
             var pedidos = await _pedidoUseCase.ListarTodosAsync();
             return Ok(pedidos);
@@ -37,12 +37,8 @@ namespace gs_sensolux.API.Controllers
         /// <summary>
         /// Busca um pedido pelo ID.
         /// </summary>
-        /// <param name="id">ID do pedido</param>
-        /// <returns>Pedido encontrado</returns>
-        /// <response code="200">Pedido encontrado</response>
-        /// <response code="404">Pedido não encontrado</response>
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> BuscarPorIdAsync(int id)
+        [HttpGet("{id:int}", Name = "GetPedidoById")]
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var pedido = await _pedidoUseCase.BuscarPorIdAsync(id);
             if (pedido == null)
@@ -54,12 +50,10 @@ namespace gs_sensolux.API.Controllers
         /// <summary>
         /// Cria um novo pedido.
         /// </summary>
-        /// <param name="request">Dados para criação do pedido</param>
-        /// <returns>Pedido criado</returns>
-        /// <response code="201">Pedido criado com sucesso</response>
-        /// <response code="400">Dados inválidos</response>
         [HttpPost]
-        public async Task<IActionResult> CriarAsync([FromBody] CreatePedidoRequest request)
+        [ProducesResponseType(typeof(EnderecoResponse), 201)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateAsync([FromBody] CreatePedidoRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -67,7 +61,12 @@ namespace gs_sensolux.API.Controllers
             try
             {
                 var novoPedido = await _pedidoUseCase.CriarAsync(request);
-                return CreatedAtAction(nameof(BuscarPorIdAsync), new { id = novoPedido.Id }, novoPedido);
+
+                if (novoPedido.Id <= 0)
+                    return Ok(novoPedido);
+
+                // Agora o nome da action bate com GetByIdAsync, e rota aceita o id
+                return CreatedAtRoute("GetPedidoById", new { id = novoPedido.Id }, novoPedido);
             }
             catch (ArgumentException ex)
             {
@@ -79,7 +78,6 @@ namespace gs_sensolux.API.Controllers
             }
             catch (ValidationException ex)
             {
-                // Cria uma lista com as mensagens de erro de validação
                 var erros = ex.Errors.Select(e => new
                 {
                     Campo = e.PropertyName,
@@ -92,19 +90,13 @@ namespace gs_sensolux.API.Controllers
                     erros
                 });
             }
-
         }
 
         /// <summary>
         /// Atualiza um pedido existente.
         /// </summary>
-        /// <param name="id">ID do pedido a ser atualizado</param>
-        /// <param name="request">Dados para atualização do pedido</param>
-        /// <response code="204">Pedido atualizado com sucesso</response>
-        /// <response code="400">Dados inválidos</response>
-        /// <response code="404">Pedido não encontrado</response>
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> AtualizarAsync(int id, [FromBody] CreatePedidoRequest request)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] CreatePedidoRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -124,7 +116,6 @@ namespace gs_sensolux.API.Controllers
             }
             catch (ValidationException ex)
             {
-                // Cria uma lista com as mensagens de erro de validação
                 var erros = ex.Errors.Select(e => new
                 {
                     Campo = e.PropertyName,
@@ -137,17 +128,13 @@ namespace gs_sensolux.API.Controllers
                     erros
                 });
             }
-
         }
 
         /// <summary>
         /// Exclui um pedido pelo ID.
         /// </summary>
-        /// <param name="id">ID do pedido a ser excluído</param>
-        /// <response code="204">Pedido excluído com sucesso</response>
-        /// <response code="404">Pedido não encontrado</response>
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> ExcluirAsync(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {

@@ -12,8 +12,8 @@ using gs_sensolux.Infrastructure.Context;
 namespace gs_sensolux.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250609004547_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250609155336_CreateMigrate")]
+    partial class CreateMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,8 @@ namespace gs_sensolux.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId");
+                    b.HasIndex("PedidoId")
+                        .IsUnique();
 
                     b.HasIndex("UsuarioId");
 
@@ -215,7 +216,7 @@ namespace gs_sensolux.Migrations
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("SSX_USUARIOS_ID_USUARIO");
+                        .HasColumnName("SSX_PRODUTOS_ID_PRODUTO");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -293,8 +294,8 @@ namespace gs_sensolux.Migrations
             modelBuilder.Entity("gs_sensolux.Domain.Entity.ItensPedido", b =>
                 {
                     b.HasOne("gs_sensolux.Domain.Entity.Pedido", "Pedido")
-                        .WithMany("Itens")
-                        .HasForeignKey("PedidoId")
+                        .WithOne("Itens")
+                        .HasForeignKey("gs_sensolux.Domain.Entity.ItensPedido", "PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -345,7 +346,8 @@ namespace gs_sensolux.Migrations
 
             modelBuilder.Entity("gs_sensolux.Domain.Entity.Pedido", b =>
                 {
-                    b.Navigation("Itens");
+                    b.Navigation("Itens")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("gs_sensolux.Domain.Entity.Produto", b =>

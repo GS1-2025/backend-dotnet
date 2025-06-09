@@ -94,11 +94,10 @@ namespace gs_sensolux.Controllers
             try
             {
                 var produtoCriado = await _produtoUseCase.CriarAsync(request);
-                return CreatedAtAction(nameof(produtoCriado.Id), new { id = produtoCriado.Id }, produtoCriado);
+                return CreatedAtAction(nameof(GetProduto), new { id = produtoCriado.Id }, produtoCriado);
             }
             catch (FluentValidation.ValidationException ex)
             {
-                // Extrai as mensagens de erro do FluentValidation e retorna no corpo da resposta
                 var erros = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
                 return BadRequest(new { erros });
             }
@@ -108,16 +107,16 @@ namespace gs_sensolux.Controllers
             }
         }
 
-            /// <summary>
-            /// Atualiza um produto existente.
-            /// </summary>
-            /// <param name="id">ID do produto a ser atualizado</param>
-            /// <param name="request">Dados para atualização do produto</param>
-            /// <response code="204">Produto atualizado com sucesso</response>
-            /// <response code="400">Dados inválidos</response>
-            /// <response code="404">Produto não encontrado</response>
-            /// <response code="500">Erro interno no servidor</response>
-            [HttpPut("{id}")]
+        /// <summary>
+        /// Atualiza um produto existente.
+        /// </summary>
+        /// <param name="id">ID do produto a ser atualizado</param>
+        /// <param name="request">Dados para atualização do produto</param>
+        /// <response code="204">Produto atualizado com sucesso</response>
+        /// <response code="400">Dados inválidos</response>
+        /// <response code="404">Produto não encontrado</response>
+        /// <response code="500">Erro interno no servidor</response>
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

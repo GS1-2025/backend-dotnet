@@ -21,6 +21,7 @@
             Ativar();
         }
 
+
         public void SetTipo(string tipo)
         {
             if (string.IsNullOrWhiteSpace(tipo))
@@ -47,8 +48,6 @@
         {
             Status = "Inativo";
         }
-
-        public bool EstaAtivo() => Status == "Ativo";
     }
 
 }

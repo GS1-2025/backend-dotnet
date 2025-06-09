@@ -213,7 +213,7 @@ namespace gs_sensolux.Migrations
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("SSX_USUARIOS_ID_USUARIO");
+                        .HasColumnName("SSX_PRODUTOS_ID_PRODUTO");
 
                     b.Property<string>("Status")
                         .IsRequired()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace gs_sensolux.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CreateMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,7 +105,7 @@ namespace gs_sensolux.Migrations
                 {
                     ID_SENSOR = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    SSX_USUARIOS_ID_USUARIO = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    SSX_PRODUTOS_ID_PRODUTO = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     TIPO = table.Column<string>(type: "NVARCHAR2(12)", maxLength: 12, nullable: false),
                     DESCRICAO = table.Column<string>(type: "NVARCHAR2(40)", maxLength: 40, nullable: false),
                     MODELO = table.Column<string>(type: "NVARCHAR2(35)", maxLength: 35, nullable: false),
@@ -114,8 +115,8 @@ namespace gs_sensolux.Migrations
                 {
                     table.PrimaryKey("PK_SSX_SENSORES", x => x.ID_SENSOR);
                     table.ForeignKey(
-                        name: "FK_SSX_SENSORES_SSX_PRODUTOS_SSX_USUARIOS_ID_USUARIO",
-                        column: x => x.SSX_USUARIOS_ID_USUARIO,
+                        name: "FK_SSX_SENSORES_SSX_PRODUTOS_SSX_PRODUTOS_ID_PRODUTO",
+                        column: x => x.SSX_PRODUTOS_ID_PRODUTO,
                         principalTable: "SSX_PRODUTOS",
                         principalColumn: "ID_PRODUTO",
                         onDelete: ReferentialAction.Cascade);
@@ -129,7 +130,8 @@ namespace gs_sensolux.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SSX_ITENS_PEDIDO_SSX_PEDIDOS_ID_PEDIDO",
                 table: "SSX_ITENS_PEDIDO",
-                column: "SSX_PEDIDOS_ID_PEDIDO");
+                column: "SSX_PEDIDOS_ID_PEDIDO",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SSX_ITENS_PEDIDO_SSX_USUARIOS_ID_USUARIO",
@@ -142,9 +144,9 @@ namespace gs_sensolux.Migrations
                 column: "SSX_IP_ID_ITEM_PEDIDO");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SSX_SENSORES_SSX_USUARIOS_ID_USUARIO",
+                name: "IX_SSX_SENSORES_SSX_PRODUTOS_ID_PRODUTO",
                 table: "SSX_SENSORES",
-                column: "SSX_USUARIOS_ID_USUARIO");
+                column: "SSX_PRODUTOS_ID_PRODUTO");
         }
 
         /// <inheritdoc />

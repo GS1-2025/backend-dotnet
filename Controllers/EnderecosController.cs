@@ -67,7 +67,7 @@ namespace gs_sensolux.Controllers
             try
             {
                 var enderecoCriado = await _useCase.CriarEnderecoAsync(request);
-                return CreatedAtAction(nameof(enderecoCriado.Id), new { id = enderecoCriado.Id }, enderecoCriado);
+                return CreatedAtAction(nameof(GetEndereco), new { id = enderecoCriado.Id }, enderecoCriado);
             }
             catch (ValidationException ex)
             {
