@@ -1,0 +1,6 @@
+@gs_sensolux_HostAddress = http://localhost:5027
+
+GET {{gs_sensolux_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

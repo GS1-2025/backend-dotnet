@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>gs-sensolux</name>
+    </assembly>
+    <members>
+        <member name="M:gs_sensolux.Controllers.EnderecosController.GetEnderecos">
+            <summary>
+            Lista todos os endereços.
+            </summary>
+            <returns>Lista de endereços.</returns>
+        </member>
+        <member name="M:gs_sensolux.Controllers.EnderecosController.GetEndereco(System.Int32)">
+            <summary>
+            Busca um endereço pelo ID.
+            </summary>
+            <param name="id">ID do endereço.</param>
+            <returns>Endereço encontrado.</returns>
+        </member>
+        <member name="M:gs_sensolux.Controllers.EnderecosController.Post(gs_sensolux.Application.DTOs.Request.CreateEnderecoRequest)">
+            <summary>
+            Cria um novo endereço.
+            </summary>
+            <param name="request">Dados do endereço.</param>
+            <returns>Endereço criado.</returns>
+        </member>
+        <member name="M:gs_sensolux.Controllers.EnderecosController.Put(System.Int32,gs_sensolux.Application.DTOs.Request.CreateEnderecoRequest)">
+            <summary>
+            Atualiza um endereço existente.
+            </summary>
+            <param name="id">ID do endereço a ser atualizado.</param>
+            <param name="request">Dados atualizados.</param>
+            <returns>Sem conteúdo.</returns>
+        </member>
+        <member name="M:gs_sensolux.Controllers.EnderecosController.DeleteEndereco(System.Int32)">
+            <summary>
+            Exclui um endereço pelo ID.
+            </summary>
+            <param name="id">ID do endereço a ser excluído.</param>
+            <returns>Sem conteúdo.</returns>
+        </member>
+        <member name="T:gs_sensolux.Controllers.ProdutosController">
+            <summary>
+            Controller para gerenciar operações relacionadas a Produtos.
+            </summary>
+        </member>
+        <member name="M:gs_sensolux.Controllers.ProdutosController.GetProdutos">
+            <summary>
+            Retorna a lista de todos os produtos.
+            </summary>
+            <returns>Lista de produtos</returns>
+            <response code="200">Retorna a lista de produtos</response>
+            <response code="500">Erro interno no servidor</response>
+        </member>
+        <member name="M:gs_sensolux.Controllers.ProdutosController.GetProduto(System.Int32)">
+            <summary>
+            Busca um produto pelo seu ID.
+            </summary>
+            <param name="id">ID do produto</param>
+            <returns>Produto encontrado</returns>
+            <response code="200">Produto encontrado</response>
+            <response code="404">Produto não encontrado</response>
+            <response code="500">Erro interno no servidor</response>
+        </member>
+        <member name="M:gs_sensolux.Controllers.ProdutosController.Post(gs_sensolux.Application.DTOs.Request.CreateProdutoRequest)">
+            <summary>
+            Cria um novo produto.
+            </summary>
+            <param name="request">Dados para criação do produto</param>
+            <returns>Produto criado</returns>
+            <response code="201">Produto criado com sucesso</response>
+            <response code="400">Dados inválidos</response>
+            <response code="500">Erro interno no servidor</response>
+        </member>
+        <member name="M:gs_sensolux.Controllers.ProdutosController.Put(System.Int32,gs_sensolux.Application.DTOs.Request.CreateProdutoRequest)">
+            <summary>
+            Atualiza um produto existente.
+            </summary>
+            <param name="id">ID do produto a ser atualizado</param>
+            <param name="request">Dados para atualização do produto</param>
+            <response code="204">Produto atualizado com sucesso</response>
+            <response code="400">Dados inválidos</response>
+            <response code="404">Produto não encontrado</response>
+            <response code="500">Erro interno no servidor</response>
+        </member>
+        <member name="M:gs_sensolux.Controllers.ProdutosController.DeleteProduto(System.Int32)">
+            <summary>
+            Remove um produto pelo ID.
+            </summary>
+            <param name="id">ID do produto a ser removido</param>
+            <response code="204">Produto removido com sucesso</response>
+            <response code="404">Produto não encontrado</response>
+            <response code="500">Erro interno no servidor</response>
+        </member>
+        <member name="T:gs_sensolux.API.Controllers.PedidoController">
+            <summary>
+            Controller responsável pelas operações relacionadas aos Pedidos.
+            </summary>
+        </member>
+        <member name="M:gs_sensolux.API.Controllers.PedidoController.ListarTodosAsync">
+            <summary>
+            Lista todos os pedidos.
+            </summary>
+            <returns>Lista de pedidos</returns>
+            <response code="200">Lista retornada com sucesso</response>
+        </member>
+        <member name="M:gs_sensolux.API.Controllers.PedidoController.BuscarPorIdAsync(System.Int32)">
+            <summary>
+            Busca um pedido pelo ID.
+            </summary>
+            <param name="id">ID do pedido</param>
+            <returns>Pedido encontrado</returns>
+            <response code="200">Pedido encontrado</response>
+            <response code="404">Pedido não encontrado</response>
+        </member>
+        <member name="M:gs_sensolux.API.Controllers.PedidoController.CriarAsync(gs_sensolux.Application.DTOs.Request.CreatePedidoRequest)">
+            <summary>
+            Cria um novo pedido.
+            </summary>
+            <param name="request">Dados para criação do pedido</param>
+            <returns>Pedido criado</returns>
+            <response code="201">Pedido criado com sucesso</response>
+            <response code="400">Dados inválidos</response>
+        </member>
+        <member name="M:gs_sensolux.API.Controllers.PedidoController.AtualizarAsync(System.Int32,gs_sensolux.Application.DTOs.Request.CreatePedidoRequest)">
+            <summary>
+            Atualiza um pedido existente.
+            </summary>
+            <param name="id">ID do pedido a ser atualizado</param>
+            <param name="request">Dados para atualização do pedido</param>
+            <response code="204">Pedido atualizado com sucesso</response>
+            <response code="400">Dados inválidos</response>
+            <response code="404">Pedido não encontrado</response>
+        </member>
+        <member name="M:gs_sensolux.API.Controllers.PedidoController.ExcluirAsync(System.Int32)">
+            <summary>
+            Exclui um pedido pelo ID.
+            </summary>
+            <param name="id">ID do pedido a ser excluído</param>
+            <response code="204">Pedido excluído com sucesso</response>
+            <response code="404">Pedido não encontrado</response>
+        </member>
+        <member name="T:gs_sensolux.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:gs_sensolux.Migrations.NovaMigrate">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.NovaMigrate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.NovaMigrate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:gs_sensolux.Migrations.NovaMigrate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
